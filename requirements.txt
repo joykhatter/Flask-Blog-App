@@ -1,0 +1,11 @@
+Flask
+Flask_RESTful
+Flask_JWT
+Flask_SQLAlchemy
+flask-cors
+boto3
+sightengine
+gunicorn
+requests
+psycopg2
+# uwsgi
