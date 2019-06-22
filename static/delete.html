@@ -1,0 +1,202 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <meta name="description" content="">
+  <meta name="author" content="">
+  
+  <title>Blog App</title>
+
+  <!-- Bootstrap core CSS -->
+  <link href="vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.0/jquery.min.js"></script>
+  <!-- Custom fonts for this template -->
+  <link href="vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
+  <link href='https://fonts.googleapis.com/css?family=Lora:400,700,400italic,700italic' rel='stylesheet' type='text/css'>
+  <link href='https://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800' rel='stylesheet' type='text/css'>
+
+  <!-- Custom styles for this template -->
+  <link href="css/clean-blog.min.css" rel="stylesheet">
+
+</head>
+
+<body>
+
+  <!-- Navigation -->
+  <nav class="navbar navbar-expand-lg navbar-light fixed-top" id="mainNav">
+    <div class="container">
+      <a class="navbar-brand" href="index.html">Home</a>
+      <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
+        Menu
+        <i class="fas fa-bars"></i>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarResponsive">
+        <ul class="navbar-nav ml-auto">
+          <li class="nav-item">
+            <a class="nav-link" href="create.html">Create Blog</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="delete.html">Delete Blog</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="update.html">Update Blog</a>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </nav>
+
+  <!-- Page Header -->
+  <header class="masthead" style="background-image: url('img/blog2.jpg')">
+    <div class="overlay"></div>
+    <div class="container">
+      <div class="row">
+        <div class="col-lg-8 col-md-10 mx-auto">
+          <div class="site-heading">
+            <h1>Blog App</h1>
+            <span class="subheading">CRUD App</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <!-- Main Content -->
+
+  <div class="container">
+    <div class="row">
+      <div class="col-lg-8 col-md-10 mx-auto">
+        <div id="parent">
+    
+        <!-- Pager -->
+        </div>
+        <div id="parent1">
+    
+        <!-- Pager -->
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <hr>
+
+  <!-- Footer -->
+  <footer>
+    <div class="container">
+      <div class="row">
+        <div class="col-lg-8 col-md-10 mx-auto">
+          <ul class="list-inline text-center">
+            <li class="list-inline-item">
+              <a href="#">
+                <span class="fa-stack fa-lg">
+                  <i class="fas fa-circle fa-stack-2x"></i>
+                  <i class="fab fa-twitter fa-stack-1x fa-inverse"></i>
+                </span>
+              </a>
+            </li>
+            <li class="list-inline-item">
+              <a href="#">
+                <span class="fa-stack fa-lg">
+                  <i class="fas fa-circle fa-stack-2x"></i>
+                  <i class="fab fa-facebook-f fa-stack-1x fa-inverse"></i>
+                </span>
+              </a>
+            </li>
+            <li class="list-inline-item">
+              <a href="#">
+                <span class="fa-stack fa-lg">
+                  <i class="fas fa-circle fa-stack-2x"></i>
+                  <i class="fab fa-github fa-stack-1x fa-inverse"></i>
+                </span>
+              </a>
+            </li>
+          </ul>
+          <p class="copyright text-muted">Copyright &copy; Your Website 2019</p>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <!-- Bootstrap core JavaScript -->
+  <script src="vendor/jquery/jquery.min.js"></script>
+  <script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+
+  <!-- Custom scripts for this template -->
+  <script src="js/clean-blog.min.js"></script>
+
+</body>
+  <script>
+    
+    $(document).ready(function(){
+      var elements = $();
+      
+      var settings = {
+        "async": true,
+        "crossDomain": true,
+        "url": "https://flask-blog2.herokuapp.com/blogs",
+        "method": "GET",
+        "headers": {
+          "cache-control": "no-cache",
+          "postman-token": "ed6797b9-96ef-3330-bf51-08087d5b36ec"
+        }
+      }
+      
+      var x = [];
+      var count = 0;
+      $.ajax(settings).done(function (response) {
+        for (i = 0; i < response.length; i++) {
+          elements = elements.add('<div class="post-preview"><a href="" onclick="return false;"><h2 class="post-title">'+response[i].title.split(/\s+/).slice(0,10).join(" ")+'<p class="car"></p></h2><h3 class="post-subtitle">'+response[i].content.split(/\s+/).slice(0,15).join(" ")+'...'+'</h3></a><p class="post-meta">Posted <a href="#"></a>on September 24, 2019</p></div><div class="form-group"><button type="submit" class="btn btn-primary" id="sendMessageButton">Delete Blog</button></div><hr>');
+          $('#parent').append(elements);
+          $("button").click({param1: response[i].id}, up);
+        }
+      });
+      function up(event){
+        x.push(event.data.param1)
+        console.log(x)
+        var up_blog = "https://flask-blog2.herokuapp.com/blog/"+x[0]
+        console.log(up_blog);
+        $("#parent").remove();
+        var settings = {
+          "async": true,
+          "crossDomain": true,
+          "url": up_blog,
+          "method": "GET",
+          "headers": {
+            "cache-control": "no-cache",
+            "postman-token": "400c2af3-789c-3a6d-163e-1b5960a4d1af"
+          }
+        }
+
+        $.ajax(settings).done(function (response) {
+          console.log(response);
+          if(count == 0) {
+            var elements = $();
+            console.log(response.title);
+            elements = elements.add('<div class="post-preview"><a href="" onclick="return false;"><h2 class="post-title">'+response.title.split(/\s+/).slice(0,10).join(" ")+'<p class="car"></p></h2><h3 class="post-subtitle">'+response.content.split(/\s+/).slice(0,15).join(" ")+'...'+'</h3></a><p class="post-meta">Posted <a href="#"></a>on September 24, 2019</p></div><div class="form-group"><button type="submit" class="btn btn-primary" id="sendMessageButton">Delete Blog</button></div><hr>');
+            $('#parent1').append(elements);
+            $("#sendMessageButton").click(function(){
+              var settings = {
+                "async": true,
+                "crossDomain": true,
+                "url": up_blog,
+                "method": "DELETE",
+                "headers": {
+                  "cache-control": "no-cache",
+                  "postman-token": "56a69fe7-b42f-c081-13db-79e527035962"
+                }
+              }
+
+              $.ajax(settings).done(function (response) {
+                window.location = 'https://flask-blog2.herokuapp.com/static/delete.html';
+              });
+            });
+          }
+          count++;
+        });
+      }
+    });
+  </script>
+</html>
